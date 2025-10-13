@@ -2,7 +2,7 @@
 
 ## Overview
 
-This template is designed as a minimal but complete starting point for JavaScript projects, emphasizing modern tooling and best practices without overwhelming complexity.
+This template is designed as a minimal but complete starting point for TypeScript projects, emphasizing modern tooling and best practices without overwhelming complexity.
 
 ## Design Principles
 
@@ -29,13 +29,13 @@ This template is designed as a minimal but complete starting point for JavaScrip
 - Smaller dependency footprint
 - Compatible with Jest API (easy migration)
 
-### Why esbuild for Building?
+### Why tsc + esbuild for Building?
 
-- Extremely fast (10-100x faster than webpack/rollup)
-- Single tool for multiple formats
-- Built-in minification and source maps
-- Native ESM and TypeScript support
-- Simple configuration
+- **tsc**: Official TypeScript compiler for type checking and declaration files
+- **esbuild**: Extremely fast bundling and minification
+- Combined approach: Type safety + performance
+- Multiple output formats (ESM/CJS/Browser/Deno/Bun)
+- Separate type checking from bundling
 
 ### Why ESLint + Prettier?
 
@@ -44,16 +44,16 @@ This template is designed as a minimal but complete starting point for JavaScrip
 - Separation of concerns (quality vs. style)
 - Widely adopted industry standard
 
-### Why JSDoc over TypeScript?
+### Why TypeScript?
 
-This is a JavaScript template (TypeScript has its own template).
+TypeScript provides:
 
-JSDoc provides:
-- Type hints without compilation
-- Documentation generation
-- IDE autocomplete
-- Gradual typing adoption path
-- No build step for type checking
+- Static type checking at compile time
+- Enhanced IDE support and autocomplete
+- Better refactoring capabilities
+- Catches errors before runtime
+- Industry-standard for modern projects
+- Excellent tooling ecosystem
 
 ### Why Husky + lint-staged?
 
@@ -83,14 +83,16 @@ JSDoc provides:
 The template builds 4 formats to support different use cases:
 
 1. **ESM** (`dist/esm/`)
-   - For Node.js 18+ with `import`
+   - For Node.js 20+ with `import`
    - For modern bundlers (webpack 5, rollup, vite)
    - Supports code splitting
+   - Includes .d.ts type declarations
 
 2. **CommonJS** (`dist/cjs/`)
    - For Node.js with `require()`
    - For older bundlers
    - Single file bundle
+   - Includes .d.ts type declarations
 
 3. **IIFE** (`dist/iife/`)
    - For direct browser `<script>` tags
@@ -102,9 +104,12 @@ The template builds 4 formats to support different use cases:
    - Import maps compatible
    - Code splitting support
 
+**Note:** Deno and Bun can consume the ESM output directly via npm specifiers - no special builds needed!
+
 ### Why Multiple Formats?
 
 Different consumers have different needs:
+
 - Library authors: ESM + CJS
 - Browser scripts: IIFE
 - Import maps: Browser ESM
@@ -117,13 +122,14 @@ Users can keep only the formats they need.
 
 ```
 src/
-├── index.js
+├── index.ts
 ├── lib/
-│   ├── greeter.js
-│   └── greeter.spec.js  # Co-located with source
+│   ├── greeter.ts
+│   └── greeter.spec.ts  # Co-located with source
 ```
 
 **Why co-located tests?**
+
 - Easier to find related tests
 - Encourages test writing
 - Clear file structure
@@ -180,11 +186,13 @@ Complete validation (~2-5 minutes)
 
 Uses `@templ-project/*` packages for consistency:
 
+- `@templ-project/tsconfig`
 - `@templ-project/eslint`
 - `@templ-project/prettier`
 - `@templ-project/vitest`
 
 **Benefits:**
+
 - Single source of truth
 - Easy updates (bump version)
 - Consistent across projects
@@ -195,6 +203,14 @@ Uses `@templ-project/*` packages for consistency:
 Users can extend configurations:
 
 ```javascript
+// tsconfig.json
+{
+  "extends": "@templ-project/tsconfig/esm",
+  "compilerOptions": {
+    // Your overrides
+  }
+}
+
 // eslint.config.mjs
 import templConfig from '@templ-project/eslint';
 
@@ -224,6 +240,7 @@ export default [
 ```
 
 **Why this structure?**
+
 - Modern Node.js respects `exports`
 - Conditional exports for different environments
 - Prevents deep imports (encapsulation)
@@ -236,6 +253,7 @@ export default [
 ```
 
 Only ships compiled code, not source. Users don't need:
+
 - Source files (they use dist/)
 - Tests
 - Config files
@@ -254,6 +272,7 @@ Keeps published package small.
 ### No Runtime Dependencies
 
 The template produces zero-dependency builds:
+
 - Smaller bundle size
 - No supply chain attacks
 - Faster installs
@@ -263,7 +282,6 @@ The template produces zero-dependency builds:
 
 ### What's NOT Included (Intentionally)
 
-- **TypeScript**: Separate template
 - **React/Vue/Framework**: Keep template minimal
 - **Database/Backend**: Focus on library template
 - **E2E Testing**: Project-specific
@@ -273,6 +291,7 @@ The template produces zero-dependency builds:
 ### Extension Points
 
 Users should add based on needs:
+
 - Testing: E2E (Playwright, Cypress)
 - Bundling: Advanced webpack/vite config
 - Deployment: CI/CD for their platform
@@ -303,6 +322,7 @@ Users should add based on needs:
 ### Version Updates
 
 Regular updates needed:
+
 - Node.js versions in CI matrix
 - Dependencies (weekly/monthly)
 - Config packages
@@ -311,6 +331,7 @@ Regular updates needed:
 ### Breaking Changes
 
 When updating:
+
 1. Update CHANGELOG.md
 2. Document migration path
 3. Version bump (semver)
@@ -318,8 +339,10 @@ When updating:
 
 ## References
 
-- [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 - [Node.js ESM Documentation](https://nodejs.org/api/esm.html)
 - [Package.json Exports](https://nodejs.org/api/packages.html#exports)
 - [Vitest Documentation](https://vitest.dev/)
-- [JSDoc Documentation](https://jsdoc.app/)
+- [TypeDoc Documentation](https://typedoc.org/)
+- [TSDoc Standard](https://tsdoc.org/)
+- [TypeScript Best Practices](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html)

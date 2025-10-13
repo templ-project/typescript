@@ -1,12 +1,24 @@
 {
   "statistics": {
-    "detectionDate": "2025-10-13T19:38:43.851Z",
+    "detectionDate": "2025-10-13T20:48:36.345Z",
     "formats": {
-      "javascript": {
+      "typescript": {
         "sources": {
-          "/Users/dragosc/Workspace/gh--templ-project/javascript/src/lib/greeter.spec.js": {
+          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/lib/greeter.ts": {
+            "lines": 88,
+            "tokens": 234,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/lib/greeter.spec.ts": {
             "lines": 136,
-            "tokens": 1359,
+            "tokens": 1522,
             "sources": 1,
             "clones": 0,
             "duplicatedLines": 0,
@@ -16,9 +28,9 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/javascript/src/lib/greeter.js": {
-            "lines": 79,
-            "tokens": 210,
+          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/index.ts": {
+            "lines": 22,
+            "tokens": 83,
             "sources": 1,
             "clones": 0,
             "duplicatedLines": 0,
@@ -28,7 +40,7 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/javascript/src/index.spec.js": {
+          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/index.spec.ts": {
             "lines": 39,
             "tokens": 336,
             "sources": 1,
@@ -40,9 +52,9 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/javascript/src/index.js": {
-            "lines": 31,
-            "tokens": 162,
+          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/cli.ts": {
+            "lines": 13,
+            "tokens": 34,
             "sources": 1,
             "clones": 0,
             "duplicatedLines": 0,
@@ -54,9 +66,9 @@
           }
         },
         "total": {
-          "lines": 285,
-          "tokens": 2067,
-          "sources": 4,
+          "lines": 298,
+          "tokens": 2209,
+          "sources": 5,
           "clones": 0,
           "duplicatedLines": 0,
           "duplicatedTokens": 0,
@@ -68,9 +80,9 @@
       }
     },
     "total": {
-      "lines": 285,
-      "tokens": 2067,
-      "sources": 4,
+      "lines": 298,
+      "tokens": 2209,
+      "sources": 5,
       "clones": 0,
       "duplicatedLines": 0,
       "duplicatedTokens": 0,
@@ -81,5 +93,5 @@
     }
   },
   "duplicates": [],
-  "filename": "/Users/dragosc/Workspace/gh--templ-project/javascript/node_modules/@jscpd/html-reporter/dist/templates/main.pug"
+  "filename": "/Users/dragosc/Workspace/gh--templ-project/typescript/node_modules/@jscpd/html-reporter/dist/templates/main.pug"
 }

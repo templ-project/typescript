@@ -1,31 +1,32 @@
-# JavaScript Bootstrap Template
+# TypeScript Bootstrap Template
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js CI](https://github.com/templ-project/javascript/workflows/Node.js%20CI/badge.svg)](https://github.com/templ-project/javascript/actions)
+[![Node.js CI](https://github.com/templ-project/typescript/actions/workflows/ci.yml/badge.svg)](https://github.com/templ-project/typescript/actions/workflows/ci.yml)
 
-> A modern JavaScript project template with ESM, testing, linting, and quality tools built-in.
+> A modern TypeScript project template with ESM, testing, linting, and quality tools built-in.
 
 ## Quick Start
 
 **Bootstrap a new project:**
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap ./my-project
+npx --yes --package=github:templ-project/typescript bootstrap ./my-project
 cd my-project
 npm install
 npm test
 ```
 
-That's it! You now have a fully configured JavaScript project.
+That's it! You now have a fully configured TypeScript project.
 
 ## What's Included
 
+- ✅ **TypeScript** - Type-safe development with modern features
 - ✅ **ESM Modules** - Modern JavaScript with Node.js 20+
 - ✅ **Vitest** - Fast unit testing with coverage
 - ✅ **ESLint + Prettier** - Code formatting and linting
 - ✅ **Husky** - Git hooks for pre-commit validation
-- ✅ **esbuild** - Multiple build formats (ESM/CJS/IIFE/Browser)
-- ✅ **JSDoc** - API documentation generation
+- ✅ **tsc + esbuild** - Multiple build formats (ESM/CJS/Browser/Deno/Bun)
+- ✅ **TypeDoc** - Automatic API documentation from TypeScript
 - ✅ **CI/CD** - GitHub Actions workflows included
 
 ## Common Commands
@@ -45,10 +46,10 @@ npm run validate       # Run all quality checks
 
 ```text
 src/
-├── index.js           # Main entry point
+├── index.ts           # Main entry point
 └── lib/
-    ├── greeter.js     # Example module with JSDoc
-    └── greeter.spec.js # Unit tests
+    ├── greeter.ts     # Example module with TypeScript types
+    └── greeter.spec.ts # Unit tests
 ```
 
 ## Documentation
@@ -56,7 +57,7 @@ src/
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
 - **[Usage Guide](USAGE.md)** - Detailed usage instructions
 - **[Architecture](ARCHITECTURE.md)** - Design decisions and architecture
-<!-- - **[API Documentation](docs/)** - Generated from JSDoc comments -->
+- **[API Documentation](docs/)** - Generated from TypeScript with TypeDoc
 
 ## Requirements
 
@@ -82,10 +83,11 @@ Outputs:
 
 All configuration uses shared packages for consistency:
 
-- **ESLint**: `@templ-project/eslint` (Google JavaScript Style Guide)
+- **TypeScript**: `@templ-project/tsconfig`
+- **ESLint**: `@templ-project/eslint`
 - **Prettier**: `@templ-project/prettier`
 - **Vitest**: `@templ-project/vitest`
-- **JSDoc**: `jsdoc.json`
+- **TypeDoc**: `typedoc.json`
 - **License Check**: `.licensee.json`
 
 ## Quality Checks
@@ -94,7 +96,7 @@ Every commit is validated with:
 
 - Code formatting (Prettier)
 - Linting (ESLint)
-- Type checking (JSDoc)
+- Type checking (TypeScript)
 - Unit tests (Vitest)
 
 CI runs additional checks:
@@ -105,12 +107,12 @@ CI runs additional checks:
 
 ## Using as a Library
 
-```javascript
+```typescript
 // ES Modules
-import { hello, Greeter } from '@templ-project/javascript-template';
+import { hello, Greeter } from '@templ-project/typescript-template';
 
 // CommonJS
-const { hello } = require('@templ-project/javascript-template');
+const { hello } = require('@templ-project/typescript-template');
 
 // Browser (after npm run build)
 <script src="./dist/iife/your-lib.min.js"></script>
@@ -125,6 +127,6 @@ MIT © [Templ Project](https://github.com/templ-project)
 
 ## Support
 
-- 🐛 [Report Issues](https://github.com/templ-project/javascript/issues)
-- 📖 [Read the Docs](https://github.com/templ-project/javascript#readme)
-- ⭐ [Star on GitHub](https://github.com/templ-project/javascript)
+- 🐛 [Report Issues](https://github.com/templ-project/typescript/issues)
+- 📖 [Read the Docs](https://github.com/templ-project/typescript#readme)
+- ⭐ [Star on GitHub](https://github.com/templ-project/typescript)

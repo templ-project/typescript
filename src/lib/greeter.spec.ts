@@ -8,7 +8,7 @@ import { Greeter, goodbye, hello } from './greeter.js';
 
 describe('greeter module', () => {
   describe('Greeter class', () => {
-    let greeter;
+    let greeter: Greeter;
 
     beforeEach(() => {
       greeter = new Greeter();
@@ -30,17 +30,17 @@ describe('greeter module', () => {
       });
 
       it('should throw an error for null', () => {
-        expect(() => greeter.hello(null)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.hello(null as unknown as string)).toThrow('Name must be a non-empty string');
       });
 
       it('should throw an error for undefined', () => {
-        expect(() => greeter.hello(undefined)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.hello(undefined as unknown as string)).toThrow('Name must be a non-empty string');
       });
 
       it('should throw an error for non-string types', () => {
-        expect(() => greeter.hello(123)).toThrow('Name must be a non-empty string');
-        expect(() => greeter.hello({})).toThrow('Name must be a non-empty string');
-        expect(() => greeter.hello([])).toThrow('Name must be a non-empty string');
+        expect(() => greeter.hello(123 as unknown as string)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.hello({} as unknown as string)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.hello([] as unknown as string)).toThrow('Name must be a non-empty string');
       });
     });
 
@@ -60,17 +60,17 @@ describe('greeter module', () => {
       });
 
       it('should throw an error for null', () => {
-        expect(() => greeter.goodbye(null)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.goodbye(null as unknown as string)).toThrow('Name must be a non-empty string');
       });
 
       it('should throw an error for undefined', () => {
-        expect(() => greeter.goodbye(undefined)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.goodbye(undefined as unknown as string)).toThrow('Name must be a non-empty string');
       });
 
       it('should throw an error for non-string types', () => {
-        expect(() => greeter.goodbye(123)).toThrow('Name must be a non-empty string');
-        expect(() => greeter.goodbye({})).toThrow('Name must be a non-empty string');
-        expect(() => greeter.goodbye([])).toThrow('Name must be a non-empty string');
+        expect(() => greeter.goodbye(123 as unknown as string)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.goodbye({} as unknown as string)).toThrow('Name must be a non-empty string');
+        expect(() => greeter.goodbye([] as unknown as string)).toThrow('Name must be a non-empty string');
       });
     });
   });
@@ -91,17 +91,17 @@ describe('greeter module', () => {
     });
 
     it('should throw an error for null', () => {
-      expect(() => hello(null)).toThrow('Name must be a non-empty string');
+      expect(() => hello(null as unknown as string)).toThrow('Name must be a non-empty string');
     });
 
     it('should throw an error for undefined', () => {
-      expect(() => hello(undefined)).toThrow('Name must be a non-empty string');
+      expect(() => hello(undefined as unknown as string)).toThrow('Name must be a non-empty string');
     });
 
     it('should throw an error for non-string types', () => {
-      expect(() => hello(123)).toThrow('Name must be a non-empty string');
-      expect(() => hello({})).toThrow('Name must be a non-empty string');
-      expect(() => hello([])).toThrow('Name must be a non-empty string');
+      expect(() => hello(123 as unknown as string)).toThrow('Name must be a non-empty string');
+      expect(() => hello({} as unknown as string)).toThrow('Name must be a non-empty string');
+      expect(() => hello([] as unknown as string)).toThrow('Name must be a non-empty string');
     });
   });
 
@@ -121,17 +121,17 @@ describe('greeter module', () => {
     });
 
     it('should throw an error for null', () => {
-      expect(() => goodbye(null)).toThrow('Name must be a non-empty string');
+      expect(() => goodbye(null as unknown as string)).toThrow('Name must be a non-empty string');
     });
 
     it('should throw an error for undefined', () => {
-      expect(() => goodbye(undefined)).toThrow('Name must be a non-empty string');
+      expect(() => goodbye(undefined as unknown as string)).toThrow('Name must be a non-empty string');
     });
 
     it('should throw an error for non-string types', () => {
-      expect(() => goodbye(123)).toThrow('Name must be a non-empty string');
-      expect(() => goodbye({})).toThrow('Name must be a non-empty string');
-      expect(() => goodbye([])).toThrow('Name must be a non-empty string');
+      expect(() => goodbye(123 as unknown as string)).toThrow('Name must be a non-empty string');
+      expect(() => goodbye({} as unknown as string)).toThrow('Name must be a non-empty string');
+      expect(() => goodbye([] as unknown as string)).toThrow('Name must be a non-empty string');
     });
   });
 });
