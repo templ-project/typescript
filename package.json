@@ -95,7 +95,7 @@
     "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*.{ts,js,mjs,cjs}": ["eslint --fix", "prettier --write"],
-    "*.{json,md,yml,yaml}": ["prettier --write"]
+    "*.{js,mjs,cjs}": ["prettier --write", "eslint --fix"],
+    "*.{json,md,yml,yaml}": ["prettier --write", "eslint --fix"]
   }
 }

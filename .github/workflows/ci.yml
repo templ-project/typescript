@@ -30,8 +30,10 @@ jobs:
     - name: Run lint check
       run: npm run lint:check
 
-    - name: Run format check
-      run: npm run format:check
+    # Prettier and ESlint/Prettier are not aligned
+    # https://github.com/templ-project/javascript-extensions/issues/37
+    # - name: Run format check
+    #   run: npm run format:check
 
     - name: Run tests with coverage
       run: npm run test:coverage
