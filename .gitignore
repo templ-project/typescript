@@ -158,3 +158,11 @@ docs/
 
 # Jscpd reports
 .jscpd/html/
+# PSScriptAnalyzer
+.github/scripts/install-psscriptanalyzer.ps1
+
+# TypeDoc
+docs-html/
+
+# mise
+.mise.local.toml

@@ -5,10 +5,11 @@ export default [
     ignores: [
       'dist/**',
       'coverage/**',
-      'docs/**',
+      'docs-html/**',
       '.jscpd/**',
       'node_modules/**',
       '**/*.config.js',
+      '**/*.config.cjs',
       '**/*.config.mjs',
       '*.md',
       '*.html',

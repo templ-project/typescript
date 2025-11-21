@@ -1,0 +1,3 @@
+'*.{cjs,js,json,jsx,mjs,md,toml,ts,tsx,yaml,yml}':
+  - prettier --write
+  - eslint --fix

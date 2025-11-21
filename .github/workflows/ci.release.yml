@@ -1,0 +1,70 @@
+name: CI » Release
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Version for the release (e.g., 1.2.3)'
+        required: true
+        type: string
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Debug inputs.prerelease
+        run: |
+          echo "version = ${{ inputs.version }}"
+          echo "prerelease = ${{ inputs.prerelease }}"
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.version_tag }}
+          fetch-depth: 0
+
+      - name: Setup Toolchain
+        uses: ./.github/actions/setup-tools
+
+      - name: Read changelog
+        id: changelog
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            echo "Using generated CHANGELOG.md from bumpalicious"
+          else
+            echo "CHANGELOG.md not found, will use tag as body"
+            echo "Release ${{ inputs.version_tag }}" > CHANGELOG.md
+          fi
+
+      - name: Build release binaries
+        run: |
+          mkdir -p release-assets
+
+          # Create source tarball (excluding build artifacts and git)
+          tar --exclude='.git' \
+              --exclude='.cwai' \
+              --exclude='.github/prompts' \
+              --exclude='node_modules' \
+              -czf release-assets/generic-template-v${{ inputs.version }}-source.tar.gz \
+              .
+          echo "Release assets created:"
+          ls -lah release-assets/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: Release ${{ inputs.version }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: ${{ inputs.prerelease }}
+          files: release-assets/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

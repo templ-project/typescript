@@ -1,17 +1,5 @@
 {
-  "$schema": "https://typedoc.org/schema.json",
-  "entryPoints": ["src/index.ts"],
-  "out": "docs",
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "**/cli.ts"],
-  "excludePrivate": true,
-  "excludeProtected": false,
-  "excludeExternals": true,
-  "readme": "README.md",
-  "plugin": [],
-  "gitRevision": "main",
-  "hideGenerator": false,
-  "navigation": {
-    "includeCategories": true,
-    "includeGroups": true
-  }
+  "extends": ["./typedoc.base.json"],
+  "entryPointStrategy": "expand",
+  "entryPoints": ["./src/index.ts"]
 }
