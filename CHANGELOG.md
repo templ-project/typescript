@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.1 (2025-11-23)
+
+### Bug Fixes
+
+* sync from javascript template ([73ee0fb](https://github.com/templ-project/typescript/commit/73ee0fb4396d0f7c8061ee830b0fd0e4e1d2e6d8))
+
 ## [1.0.0] - 2025-09-08
 
 ### Added
