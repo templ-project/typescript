@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   server: {
@@ -21,9 +21,9 @@ export default defineConfig({
         '**/dist/**',
         '**/node_modules/**',
         '**/.jscpd/**',
-        '**/src/**/*.spec.ts',
-        '**/src/**/*.test.ts',
-        '**/src/cli.ts',
+        '**/src/**/*.spec.{js,ts}',
+        '**/src/**/*.test.{js,ts}',
+        '**/src/cli.{js,ts}',
         '**/*.config.*',
       ],
       all: true,

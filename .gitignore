@@ -2,10 +2,6 @@
 .cwai
 .github/prompts
 
-# Env
-.env*
-!.env.example
-
 # Logs
 logs
 *.log
@@ -153,16 +149,14 @@ dist/
 coverage/
 .nyc_output/
 
-# Add JSDoc output to gitignore
-docs/
-
 # Jscpd reports
 .jscpd/html/
+
 # PSScriptAnalyzer
-.github/scripts/install-psscriptanalyzer.ps1
+.github/scripts/
 
 # TypeDoc
 docs-html/
 
-# mise
+# mise local configs
 .mise.local.toml
