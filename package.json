@@ -20,11 +20,9 @@
   "jsdelivr": "./dist/iife/your-lib.min.js",
   "sideEffects": false,
   "bin": {
-    "bootstrap": ".install/bootstrap.js"
+    "bootstrap": ".npx-install/bootstrap.js"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist", ".npx-install"],
   "scripts": {
     "build": "run-s build:*",
     "build:browser": "tsc -p tsconfig.browser.json && esbuild dist/browser/index.js --bundle --format=esm --platform=browser --target=es2018 --outdir=dist/browser --splitting --minify --sourcemap --allow-overwrite",

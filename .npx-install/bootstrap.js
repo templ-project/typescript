@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * @fileoverview Bootstrap script for JavaScript template project.
+ * @fileoverview Bootstrap script for TypeScript template project.
  * Clones the template and prepares it for use as a new project.
  */
 
@@ -49,10 +49,10 @@ function parseArgs() {
  */
 function showHelp() {
   console.log(`
-JavaScript Template Bootstrap Tool
+TypeScript Template Bootstrap Tool
 
 Usage:
-  npx --yes --package=github:templ-project/javascript bootstrap [options] [path]
+  npx --yes --package=github:templ-project/typescript bootstrap [options] [path]
 
 Options:
   --part-of-monorepo        Remove .husky, .github folders and related packages
@@ -66,19 +66,19 @@ Arguments:
 
 Examples:
   # Bootstrap in current directory with all build targets
-  npx --yes --package=github:templ-project/javascript bootstrap
+  npx --yes --package=github:templ-project/typescript bootstrap
 
   # Bootstrap in specific directory
-  npx --yes --package=github:templ-project/javascript bootstrap ./my-project
+  npx --yes --package=github:templ-project/typescript bootstrap ./my-project
 
   # Bootstrap as part of monorepo (removes git hooks)
-  npx --yes --package=github:templ-project/javascript bootstrap --part-of-monorepo
+  npx --yes --package=github:templ-project/typescript bootstrap --part-of-monorepo
 
   # Bootstrap with only ESM and CJS builds
-  npx --yes --package=github:templ-project/javascript bootstrap --target esm,cjs
+  npx --yes --package=github:templ-project/typescript bootstrap --target esm,cjs
 
   # Combine options
-  npx --yes --package=github:templ-project/javascript bootstrap --part-of-monorepo --target esm ./my-lib
+  npx --yes --package=github:templ-project/typescript bootstrap --part-of-monorepo --target esm ./my-lib
 `);
 }
 
@@ -180,8 +180,8 @@ function removeMonorepoDependencies(pkg) {
  * @return {!Object} Modified package.json object.
  */
 function removeBootstrapArtifacts(pkg, targetPath) {
-  // Remove .install directory
-  const installDir = path.join(targetPath, '.nxp-install');
+  // Remove .npx-install directory
+  const installDir = path.join(targetPath, '.npx-install');
   removeIfExists(installDir);
 
   // Remove bin field if it exists
@@ -200,7 +200,7 @@ function removeBootstrapArtifacts(pkg, targetPath) {
  */
 function updatePackageMetadata(pkg) {
   // Reset name to a placeholder
-  pkg.name = 'my-javascript-project';
+  pkg.name = 'my-typescript-project';
 
   // Reset version
   pkg.version = '0.1.0';
@@ -252,8 +252,8 @@ function cloneTemplate(targetPath) {
 
   try {
     // Clone the repository
-    console.log('  Cloning from https://github.com/templ-project/javascript...');
-    execSync(`git clone --depth 1 https://github.com/templ-project/javascript.git "${targetPath}"`, {
+    console.log('  Cloning from https://github.com/templ-project/typescript...');
+    execSync(`git clone --depth 1 https://github.com/templ-project/typescript.git "${targetPath}"`, {
       stdio: 'pipe',
     });
     console.log(`  ✓ Template cloned to ${targetPath}`);
@@ -263,7 +263,7 @@ function cloneTemplate(targetPath) {
     console.error('\nPlease ensure:');
     console.error('  1. Git is installed and available in PATH');
     console.error('  2. You have internet connectivity');
-    console.error('  3. You have access to https://github.com/templ-project/javascript');
+    console.error('  3. You have access to https://github.com/templ-project/typescript');
     process.exit(1);
   }
 }
@@ -283,7 +283,7 @@ function bootstrap(config) {
     return;
   }
 
-  console.log('\n🚀 JavaScript Template Bootstrap\n');
+  console.log('\n🚀 TypeScript Template Bootstrap\n');
 
   const targetPath = config.targetPath;
 
