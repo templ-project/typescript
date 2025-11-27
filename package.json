@@ -22,9 +22,7 @@
   "bin": {
     "bootstrap": ".install/bootstrap.js"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "run-s build:*",
     "build:browser": "tsc -p tsconfig.browser.json && esbuild dist/browser/index.js --bundle --format=esm --platform=browser --target=es2018 --outdir=dist/browser --splitting --minify --sourcemap --allow-overwrite",
