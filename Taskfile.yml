@@ -1,9 +1,20 @@
 version: '3'
 
 vars:
+  # mise dependent
+  __TF_MISE_E: 'mise trust; mise exec --'
+  __TF_MISE_E_PWSH: 'mise trust; mise exec -- pwsh -ExecutionPolicy Bypass -Command'
+  __TF_MISE_E_PWSH_FILE: 'mise trust; mise exec -- pwsh -ExecutionPolicy Bypass -File'
+  __TF_MISE_E_UV_RUN: 'mise trust; mise exec -- uv run'
+  # os dependent
+  __TF_COMMAND_WRAPPER:
+    sh: |
+      echo '{{if eq OS "windows"}}powershell -ExecutionPolicy Bypass -Command{{else}}bash -c{{end}}'
+  __TF_VAR_PREFIX:
+    sh: |
+      echo "{{if eq OS "windows"}}\${{else}}{{end}}"
   __TF_HEADER_LINE: '=============================================================='
   __TF_SEP: ' '
-  __TF_MISE_E: 'mise trust; mise exec --'
 
 tasks:
   # ==========================================================================
@@ -262,6 +273,16 @@ tasks:
     cmds:
       - |
         echo "📦 Installing Mise dependencies..."
+        if [ ! -f .mise.local.lock ] && [ ! -f .mise.lock ]; then
+          echo "⚠️  .mise.local.lock not found; sync won't generate .mise.lock automatically."
+          echo "Please create a .mise.local.lock file or a .mise.lock file to proceed."
+          echo ""
+          echo "[settings]"
+          echo "experimental = true"
+          echo "lockfile = true"
+          echo ""
+          exit 1
+        fi
         mise trust && mise install --yes
         echo "✓ Mise environment ready"
     desc: 'Install Mise dependencies'
@@ -271,6 +292,7 @@ tasks:
       - |
         echo "📦 Installing NodeJs dependencies..."
         {{.__TF_MISE_E}} npm install
+        npx husky
         echo "✓ NodeJs environment ready"
     desc: 'Install NodeJs dependencies'
 
