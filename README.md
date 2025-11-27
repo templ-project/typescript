@@ -18,16 +18,31 @@ npm test
 
 That's it! You now have a fully configured TypeScript project.
 
+### Bootstrap Options
+
+```bash
+# Bootstrap with only ESM and CJS builds (no browser builds)
+npx --yes --package=github:templ-project/typescript bootstrap --target esm,cjs ./my-project
+
+# Bootstrap as part of a monorepo (removes .husky, .github)
+npx --yes --package=github:templ-project/typescript bootstrap --part-of-monorepo ./packages/my-lib
+
+# Show all available options
+npx --yes --package=github:templ-project/typescript bootstrap --help
+```
+
+See [.npx-install/README.md](.npx-install/README.md) for detailed bootstrap documentation.
+
 ## What's Included
 
-- ✅ **TypeScript** - Type-safe development with modern features
-- ✅ **ESM Modules** - Modern JavaScript with Node.js 20+
-- ✅ **Vitest** - Fast unit testing with coverage
-- ✅ **ESLint + Prettier** - Code formatting and linting
-- ✅ **Husky** - Git hooks for pre-commit validation
-- ✅ **tsc + esbuild** - Multiple build formats (ESM/CJS/Browser/Deno/Bun)
-- ✅ **TypeDoc** - Automatic API documentation from TypeScript
-- ✅ **CI/CD** - GitHub Actions workflows included
+- **TypeScript** - Type-safe development with modern features
+- **ESM Modules** - Modern JavaScript with Node.js 20+
+- **Vitest** - Fast unit testing with coverage
+- **ESLint + Prettier** - Code formatting and linting
+- **Husky** - Git hooks for pre-commit validation
+- **tsc + esbuild** - Multiple build formats (ESM/CJS/Browser/IIFE)
+- **TypeDoc** - Automatic API documentation from TypeScript
+- **CI/CD** - GitHub Actions workflows included
 
 ## Common Commands
 
@@ -38,7 +53,7 @@ npm run test:coverage  # Run tests with coverage
 npm run lint           # Lint and auto-fix
 npm run format         # Format code with Prettier
 npm run build          # Build for production
-npm run docs           # Generate JSDoc documentation
+npm run docs           # Generate TypeDoc documentation
 npm run validate       # Run all quality checks
 ```
 
@@ -55,9 +70,7 @@ src/
 ## Documentation
 
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute
-- **[Usage Guide](USAGE.md)** - Detailed usage instructions
-- **[Architecture](ARCHITECTURE.md)** - Design decisions and architecture
-- **[API Documentation](docs/)** - Generated from TypeScript with TypeDoc
+- **[Bootstrap Options](.npx-install/README.md)** - Detailed bootstrap/scaffolding options
 
 ## Requirements
 
@@ -83,7 +96,6 @@ Outputs:
 
 All configuration uses shared packages for consistency:
 
-- **TypeScript**: `@templ-project/tsconfig`
 - **ESLint**: `@templ-project/eslint`
 - **Prettier**: `@templ-project/prettier`
 - **Vitest**: `@templ-project/vitest`
@@ -127,6 +139,6 @@ MIT © [Templ Project](https://github.com/templ-project)
 
 ## Support
 
-- 🐛 [Report Issues](https://github.com/templ-project/typescript/issues)
-- 📖 [Read the Docs](https://github.com/templ-project/typescript#readme)
-- ⭐ [Star on GitHub](https://github.com/templ-project/typescript)
+- [Report Issues](https://github.com/templ-project/typescript/issues)
+- [Read the Docs](https://github.com/templ-project/typescript#readme)
+- [Star on GitHub](https://github.com/templ-project/typescript)

@@ -9,7 +9,7 @@ This directory contains the bootstrap script for setting up new projects from th
 Bootstrap a new project in the current directory:
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap
+npx --yes --package=github:templ-project/typescript bootstrap
 ```
 
 ### Options
@@ -25,7 +25,7 @@ Use this flag when adding this template as part of a monorepo. This will:
 - Remove `lint-staged` configuration
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap --part-of-monorepo
+npx --yes --package=github:templ-project/typescript bootstrap --part-of-monorepo
 ```
 
 #### `--target <targets>`
@@ -44,10 +44,10 @@ Multiple targets can be specified as comma-separated values:
 
 ```bash
 # Keep only ESM and CJS builds
-npx --yes --package=github:templ-project/javascript bootstrap --target esm,cjs
+npx --yes --package=github:templ-project/typescript bootstrap --target esm,cjs
 
 # Keep only browser builds
-npx --yes --package=github:templ-project/javascript bootstrap --target browser,iife
+npx --yes --package=github:templ-project/typescript bootstrap --target browser,iife
 ```
 
 #### Target Directory
@@ -55,7 +55,7 @@ npx --yes --package=github:templ-project/javascript bootstrap --target browser,i
 Specify a target directory as the last argument:
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap ./my-project
+npx --yes --package=github:templ-project/typescript bootstrap ./my-project
 ```
 
 ### Complete Examples
@@ -63,13 +63,13 @@ npx --yes --package=github:templ-project/javascript bootstrap ./my-project
 **Standard project in current directory:**
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap
+npx --yes --package=github:templ-project/typescript bootstrap
 ```
 
 **Monorepo package with only ESM and CJS:**
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap \
+npx --yes --package=github:templ-project/typescript bootstrap \
   --part-of-monorepo \
   --target esm,cjs \
   ./packages/my-lib
@@ -78,7 +78,7 @@ npx --yes --package=github:templ-project/javascript bootstrap \
 **Browser-only library:**
 
 ```bash
-npx --yes --package=github:templ-project/javascript bootstrap \
+npx --yes --package=github:templ-project/typescript bootstrap \
   --target browser,iife \
   ./my-browser-lib
 ```
@@ -87,23 +87,27 @@ npx --yes --package=github:templ-project/javascript bootstrap \
 
 The bootstrap script performs the following actions:
 
-1. **Removes Git History**
+1. **Clones the Template Repository**
+   - Clones from `https://github.com/templ-project/typescript`
+   - Uses `--depth 1` for faster cloning
+
+2. **Removes Git History**
    - Deletes `.git` directory to start fresh
 
-2. **Cleans Build Configuration** (if `--target` specified)
+3. **Cleans Build Configuration** (if `--target` specified)
    - Removes unwanted build scripts from package.json
    - Keeps only the specified build targets
 
-3. **Removes Bootstrap Artifacts**
-   - Deletes `.install` directory (this directory!)
+4. **Removes Bootstrap Artifacts**
+   - Deletes `.npx-install` directory (this directory!)
    - Removes `bin` field from package.json
 
-4. **Updates Package Metadata**
-   - Resets package name to `my-javascript-project`
+5. **Updates Package Metadata**
+   - Resets package name to `my-typescript-project`
    - Resets version to `0.1.0`
    - Clears repository, bugs, and homepage URLs
 
-5. **Monorepo Cleanup** (if `--part-of-monorepo` specified)
+6. **Monorepo Cleanup** (if `--part-of-monorepo` specified)
    - Removes `.husky` directory
    - Removes `.github` directory
    - Removes git hook dependencies
@@ -154,10 +158,10 @@ After running the bootstrap script, follow these steps:
 
 If you need to modify the bootstrap script:
 
-1. Edit `.install/bootstrap.js`
+1. Edit `.npx-install/bootstrap.js`
 2. Test locally by running:
    ```bash
-   node .install/bootstrap.js [options]
+   node .npx-install/bootstrap.js [options]
    ```
 3. Commit and push changes to the template repository
 
@@ -167,18 +171,18 @@ If you need to modify the bootstrap script:
 
 If you get "script not found" errors, ensure:
 
-1. You're using Node.js 18 or higher
+1. You're using Node.js 20 or higher
 2. The package was installed correctly
-3. The `.install/bootstrap.js` file has execute permissions
+3. The `.npx-install/bootstrap.js` file has execute permissions
 
 ### Package.json Not Found
 
-The bootstrap script expects to run in a directory that already contains the template files. Make sure you've cloned or extracted the template first.
+The bootstrap script clones the template repository first, then modifies it. If you see this error, there may be network issues preventing the clone.
 
 ### Permission Errors
 
 On Unix-like systems, ensure the bootstrap script is executable:
 
 ```bash
-chmod +x .install/bootstrap.js
+chmod +x .npx-install/bootstrap.js
 ```
