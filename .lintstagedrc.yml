@@ -1,0 +1,6 @@
+'*.{ts,js,mjs,cjs}':
+  - task prettier -- --write
+  - task eslint -- --fix
+'*.{json,md,toml,yaml,yml}':
+  - task prettier -- --write
+  - task eslint -- --fix

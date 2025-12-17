@@ -1,0 +1,312 @@
+version: '3'
+
+vars:
+  # mise dependent
+  __TF_MISE_E: 'mise trust; mise exec --'
+  # os dependent
+  __TF_HEADER_LINE: '=============================================================='
+
+tasks:
+  # ==========================================================================
+  # Generic Tasks
+  # ==========================================================================
+
+  print:env:
+    cmds:
+      - cmd: |
+          {{.__TF_MISE_E}} env | sort
+        platforms: [darwin, linux]
+      - cmd: |
+          {{.__TF_MISE_E}} pwsh -Command '$BashPath=(Get-Command bash -ErrorAction SilentlyContinue).Path;
+            if ($BashPath) { & $BashPath -c "env | sort" }
+            else { Get-ChildItem "Env:" | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" } }'
+        platforms: [windows]
+    desc: 'Print current build environment variables'
+
+  # ==========================================================================
+  # Build Tasks
+  # ==========================================================================
+
+  build:
+    desc: 'Build project'
+    cmds:
+      - cmd: |
+          echo "{{.__TF_HEADER_LINE}}"
+          echo "Building TypeScript project for {{OS}}/{{ARCH}}"
+          echo "{{.__TF_HEADER_LINE}}"
+      - task: print:env
+      - |
+        {{.__TF_MISE_E}} npm run build
+    sources:
+      - src/**/*.ts
+
+  # ============================================================================
+  # Clean Tasks
+  # ============================================================================
+
+  clean:
+    desc: 'Clean all build artifacts'
+    cmds:
+      - cmd: |
+          echo "Cleaning build artifacts..."
+          rm -rf \
+            .task \
+            dist \
+            coverage \
+            .nyc_output \
+            docs
+          echo "Build artifacts cleaned"
+
+  # ============================================================================
+  # Code Quality Tasks
+  # ============================================================================
+
+  format:
+    desc: 'Format code and fix issues'
+    cmds:
+      - task: format:prettier
+      - cmd: echo "Code format completed"
+
+  format:prettier:
+    cmds:
+      - task: prettier
+        vars:
+          CLI_ARGS: '--write .'
+    desc: 'Format code using Prettier'
+    silent: true
+
+  prettier:
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npx prettier {{.CLI_ARGS}}
+      - echo "- prettier format completed"
+    silent: true
+    sources:
+      - '**/*.{json,md,toml,yaml,yml,ts,js,mjs,cjs}'
+
+  format:check:
+    cmds:
+      - task: format:check:prettier
+      - cmd: echo "Code format check completed"
+    desc: 'Check code formatting without fixing'
+
+  format:check:prettier:
+    cmds:
+      - task: prettier
+        vars:
+          CLI_ARGS: '--check .'
+      - echo "- prettier format check completed"
+    desc: 'Check code formatting using Prettier'
+    silent: true
+
+  lint:
+    desc: 'Run linter and fix issues'
+    cmds:
+      - task: lint:eslint
+      - cmd: echo "Linting completed"
+
+  lint:eslint:
+    cmds:
+      - task: eslint
+        vars:
+          CLI_ARGS: '--fix .'
+      - echo "- eslint lint completed"
+    desc: 'Lint code using ESLint'
+    silent: true
+
+  eslint:
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npx eslint {{.CLI_ARGS}}
+    desc: 'Run ESLint'
+    silent: true
+    sources:
+      - '**/*.{ts,js,mjs,cjs,json,md,toml,yaml,yml}'
+
+  lint:check:
+    desc: 'Run linter without fixing'
+    cmds:
+      - task: lint:check:eslint
+      - cmd: echo "Linting check completed"
+
+  lint:check:eslint:
+    cmds:
+      - task: eslint
+        vars:
+          CLI_ARGS: '.'
+      - echo "- eslint lint check completed"
+    desc: 'Check code using ESLint'
+    silent: true
+
+  lint-staged:
+    desc: 'Run linter on staged files and fix issues'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npx -y lint-staged
+    silent: true
+
+  duplicate-check:
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run duplicate-check
+      - git add .jscpd/jscpd-badge.svg 2>/dev/null || true
+    desc: 'Check for duplicate code using jscpd'
+
+  # ============================================================================
+  # TypeScript Tasks
+  # ============================================================================
+
+  typecheck:
+    desc: 'Run TypeScript type checking'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run typecheck
+    sources:
+      - src/**/*.ts
+
+  # ============================================================================
+  # Test Tasks
+  # ============================================================================
+
+  test:
+    desc: 'Run tests'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run test
+      - cmd: echo "All tests completed"
+
+  test:watch:
+    desc: 'Run tests in watch mode'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run test:watch
+
+  test:coverage:
+    desc: 'Run tests with coverage'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run test:coverage
+
+  # ============================================================================
+  # Development Tools
+  # ============================================================================
+
+  run:
+    aliases: [start]
+    desc: 'Run application'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run start
+
+  serve:
+    desc: 'Serve the application'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run serve
+
+  # ============================================================================
+  # Documentation Tasks
+  # ============================================================================
+
+  docs:
+    desc: 'Build documentation'
+    cmds:
+      - |
+        {{.__TF_MISE_E}} npm run docs
+
+  # ============================================================================
+  # Validation Tasks
+  # ============================================================================
+
+  validate:
+    cmds:
+      - task: format
+      - task: lint
+      - task: typecheck
+      - task: duplicate-check
+      - task: test
+      - cmd: |
+          echo ""
+          echo "{{.__TF_HEADER_LINE}}"
+          echo "Validation successful"
+          echo "{{.__TF_HEADER_LINE}}"
+          echo ""
+    desc: 'Run full validation pipeline'
+    silent: true
+
+  # ============================================================================
+  # Dependencies
+  # ============================================================================
+
+  deps:clean:
+    cmds:
+      - task: deps:clean:mise
+      - task: deps:clean:npm
+    desc: 'Clean all project dependencies'
+
+  deps:clean:mise:
+    cmds:
+      - echo "Cleaning Mise dependencies..."
+      - cmd: |
+          rm -rf \
+            ~/.local/share/mise/installs \
+            ~/AppData/mise/installs
+      - echo "Mise environment cleaned"
+    desc: 'Clean Mise dependencies'
+
+  deps:clean:npm:
+    cmds:
+      - |
+        echo "Cleaning NodeJs dependencies..."
+        rm -rf node_modules package-lock.json
+        echo "NodeJs environment cleaned"
+    desc: 'Clean NodeJs dependencies'
+
+  deps:sync:
+    cmds:
+      - task: deps:sync:mise
+      - task: deps:sync:npm
+    desc: 'Install all project dependencies'
+
+  deps:sync:mise:
+    cmds:
+      - |
+        echo "Installing Mise dependencies..."
+        touch mise.lock
+        mise trust && mise install --yes
+        echo "Mise environment ready"
+    desc: 'Install Mise dependencies'
+
+  deps:sync:npm:
+    cmds:
+      - |
+        echo "Installing NodeJs dependencies..."
+        {{.__TF_MISE_E}} npm install
+        {{.__TF_MISE_E}} npx husky
+        echo "NodeJs environment ready"
+    desc: 'Install NodeJs dependencies'
+
+  deps:refresh:
+    cmds:
+      - task: deps:refresh:mise
+      - task: deps:refresh:npm
+    desc: 'Refresh all project dependencies'
+
+  deps:refresh:mise:
+    cmds:
+      - |
+        echo "Refreshing Mise packages..."
+        touch mise.lock
+        mise trust && mise upgrade
+        echo "Packages refreshed"
+    desc: 'Refresh all Mise packages (update dependencies)'
+
+  deps:refresh:npm:
+    cmds:
+      - |
+        echo "Refreshing NodeJs packages..."
+        {{.__TF_MISE_E}} npm outdated \
+          && {{.__TF_MISE_E}} npm update \
+          && {{.__TF_MISE_E}} npm audit fix
+        echo "Packages refreshed"
+    desc: 'Refresh all NodeJs packages (update dependencies)'

@@ -1,0 +1,139 @@
+name: CI » Validate & Build
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        description: Operating system to run on
+        required: false
+        type: string
+        default: ubuntu-latest
+      jobs:
+        description: Comma-separated list of jobs to run (build, lint, test, duplicate-check)
+        required: false
+        type: string
+        default: build,lint,test
+
+jobs:
+  build:
+    runs-on: ${{ inputs.runs-on }}
+    if: contains(inputs.jobs, 'build')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-tools
+
+      - name: Build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
+        run: task build
+        shell: bash
+
+      - name: Get project info
+        id: project
+        shell: bash
+        run: |
+          # Get name from package.json
+          NAME=$(mise exec -- node -p "require('./package.json').name.replace('@templ-project/', '')")
+
+          # Get version from package.json
+          VERSION=$(mise exec -- node -p "require('./package.json').version")
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Project: $NAME v$VERSION"
+
+      - name: Create distribution archives
+        id: archive
+        shell: bash
+        run: |
+          mkdir -p release-assets
+          NAME="${{ steps.project.outputs.name }}"
+          VERSION="${{ steps.project.outputs.version }}"
+
+          # Create npm package tarball
+          mise exec -- npm pack
+          mv *.tgz release-assets/
+
+          # Create dist tarball if dist directory exists
+          if [ -d dist ]; then
+            tar -czf "release-assets/${NAME}-${VERSION}-dist.tar.gz" dist/
+            zip -r "release-assets/${NAME}-${VERSION}-dist.zip" dist/
+            echo "Created distribution archives"
+          fi
+
+          ls -lah release-assets/
+
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-archives
+          path: release-assets/*
+          retention-days: 1
+
+  lint:
+    runs-on: ${{ inputs.runs-on }}
+    if: always() && contains(inputs.jobs, 'lint') && (needs.build.result == 'success' || needs.build.result == 'skipped')
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-tools
+
+      - name: Check Code Formatting
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          task format:check
+        shell: bash
+
+      - name: Lint Code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
+        run: task lint:check typecheck
+        shell: bash
+
+  test:
+    runs-on: ${{ inputs.runs-on }}
+    if: always() && contains(inputs.jobs, 'test') && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-tools
+
+      - name: Run Tests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
+        run: task test
+        shell: bash
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  duplicate-check:
+    runs-on: ${{ inputs.runs-on }}
+    if: contains(inputs.jobs, 'duplicate-check')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-tools
+
+      - name: Run duplicate check
+        run: task duplicate-check
+        shell: bash
+
+      - name: Run license check
+        run: |
+          mise trust && mise exec -- npm run license-check
+        shell: bash
+
+      - name: Audit Packages
+        run: |
+          mise trust && mise exec -- npm audit --audit-level=moderate
+        shell: bash

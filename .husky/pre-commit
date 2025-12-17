@@ -1,9 +1,3 @@
-npx lint-staged
-
-npm run duplicate-check
-
-npm run license-check
-
-npm audit --audit-level=moderate
+mise exec -- task lint-staged duplicate-check
 
 git add .
