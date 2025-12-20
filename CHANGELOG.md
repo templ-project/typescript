@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.1 (2025-12-20)
+
+### Bug Fixes
+
+* sort all config files alphabetically for consistency and maintainability ([a473251](https://github.com/templ-project/typescript/commit/a473251a8b7cd96e1fc31554eca88f8ecbd2d624))
+
 ## 1.1.0 (2025-12-19)
 
 ### Features
