@@ -27,6 +27,7 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
         run: task build
         shell: bash
 
@@ -81,12 +82,14 @@ jobs:
       - uses: ./.github/actions/setup-tools
 
       - name: Check Code Formatting
+        env:
+          PYTHONIOENCODING: utf-8
         run: task format:check
         shell: bash
 
       - name: Lint Code
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
         run: task lint:check
         shell: bash
 
@@ -100,14 +103,14 @@ jobs:
 
       - name: Run Tests
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
         run: task test
         shell: bash
 
       - name: Run Tests with Coverage
         if: inputs.runs-on == 'ubuntu-latest'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONIOENCODING: utf-8
         run: task test:coverage
         shell: bash
 
@@ -116,8 +119,8 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
     steps:
       - uses: actions/checkout@v6
-      - uses: ./.github/actions/setup-tools
+      - uses: actions/setup-node@v3
 
       - name: Run duplicate check
-        run: task duplicate-check
+        run: npm install && npm run duplicate-check
         shell: bash

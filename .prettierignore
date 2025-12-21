@@ -3,6 +3,7 @@
 *.lock
 *.log
 *.ps1
+*.py
 *.sh
 .editorconfig
 .eslintignore
@@ -14,6 +15,8 @@
 .mise.lock
 .npx-install/
 .prettierignore
+.PSScriptAnalyzerSettings.psd1
+.ruff_cache/
 .shellcheckrc
 .venv/
 # changelog is automatically generated, it cannot be linted

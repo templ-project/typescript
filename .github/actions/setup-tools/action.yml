@@ -22,7 +22,8 @@ runs:
       shell: bash
       run: |
         curl https://mise.run | sh
-        echo "eval \"\$(/Users/runner/.local/bin/mise activate bash)\"" >> ~/.bashrc
+        # TODO: make sure the command works for both Linux and MacOS
+        # echo "eval \"\$(/Users/runner/.local/bin/mise activate bash)\"" >> ~/.bashrc
         mise activate
         mise --version
 
@@ -65,6 +66,17 @@ runs:
         path: |
           ~\AppData\Local\mise\installs
           ~\.cache\mise
+
+    # === python === cache ===
+    - uses: actions/cache@v4
+      continue-on-error: true
+      if: ${{ runner.os == 'Windows' }}
+      with:
+        key: typescript-${{ runner.os }}-${{ runner.arch }}-uv-${{ hashFiles('uv.lock') }}
+        restore-keys: |
+          typescript-${{ runner.os }}-${{ runner.arch }}-uv-
+        path: |
+          .venv
 
     # === node === cache ===
     - uses: actions/cache@v4

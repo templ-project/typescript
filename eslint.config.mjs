@@ -12,6 +12,7 @@ export default [
       '.gitignore',
       '.jscpd/**',
       '.prettierignore',
+      '.venv/**',
       'coverage/**',
       'dist/**',
       'docs-html/**',
