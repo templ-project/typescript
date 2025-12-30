@@ -1,10 +1,10 @@
 {
   "statistics": {
-    "detectionDate": "2025-12-21T11:19:29.870Z",
+    "detectionDate": "2025-12-30T00:23:44.436Z",
     "formats": {
       "typescript": {
         "sources": {
-          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/lib/greeter.ts": {
+          "C:/Users/drago/Workspace/gh--templ-project/typescript/src/lib/greeter.ts": {
             "lines": 88,
             "tokens": 234,
             "sources": 1,
@@ -16,7 +16,7 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/lib/greeter.spec.ts": {
+          "C:/Users/drago/Workspace/gh--templ-project/typescript/src/lib/greeter.spec.ts": {
             "lines": 136,
             "tokens": 1522,
             "sources": 1,
@@ -28,7 +28,7 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/index.ts": {
+          "C:/Users/drago/Workspace/gh--templ-project/typescript/src/index.ts": {
             "lines": 22,
             "tokens": 83,
             "sources": 1,
@@ -40,7 +40,7 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/index.spec.ts": {
+          "C:/Users/drago/Workspace/gh--templ-project/typescript/src/index.spec.ts": {
             "lines": 39,
             "tokens": 336,
             "sources": 1,
@@ -52,7 +52,7 @@
             "newDuplicatedLines": 0,
             "newClones": 0
           },
-          "/Users/dragosc/Workspace/gh--templ-project/typescript/src/cli.ts": {
+          "C:/Users/drago/Workspace/gh--templ-project/typescript/src/cli.ts": {
             "lines": 13,
             "tokens": 34,
             "sources": 1,
@@ -93,5 +93,5 @@
     }
   },
   "duplicates": [],
-  "filename": "/Users/dragosc/Workspace/gh--templ-project/typescript/node_modules/@jscpd/html-reporter/dist/templates/main.pug"
+  "filename": "C:\\Users\\drago\\Workspace\\gh--templ-project\\typescript\\node_modules\\@jscpd\\html-reporter\\dist\\templates\\main.pug"
 }
