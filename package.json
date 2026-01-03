@@ -82,6 +82,7 @@
     "pretest": "run-s clean build",
     "serve": "npx --yes serve .",
     "start": "tsx src/cli.ts",
+    "start:debug": "tsx --inspect-brk src/cli.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
